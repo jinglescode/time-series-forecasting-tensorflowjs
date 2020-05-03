@@ -1,0 +1,24 @@
+{
+  "name": "time-series-forecasting-tensorflowjs",
+  "version": "1.0.0",
+  "description": "Pull stock prices from online API and perform predictions using Recurrent Neural Network & Long Short Term Memory (LSTM) with TensorFlow.js framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinglescode/time-series-forecasting-tensorflowjs.git"
+  },
+  "keywords": [
+    "machine-learning",
+    "tensorflowjs",
+    "javascript"
+  ],
+  "author": "Khok Hong Jing (Jingles)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinglescode/time-series-forecasting-tensorflowjs/issues"
+  },
+  "homepage": "https://jinglescode.github.io/time-series-forecasting-tensorflowjs"
+}

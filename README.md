@@ -7,7 +7,7 @@ Machine learning is becoming increasingly popular these days and a growing numbe
 
 Disclaimer: As stock markets fluctuation are dynamic and unpredictable owing to multiple factors, this experiment is 100% educational and by no means a trading prediction tool.
 
-[Explore Demo](https://jinglescode.github.io/demos/tfjs-timeseries-stocks/)
+[Explore Demo](https://jinglescode.github.io/time-series-forecasting-tensorflowjs/)
 
 ---
 
@@ -177,4 +177,4 @@ There are many ways to do time series prediction other than using a simple movin
 
 With TensorFlow.js, machine learning on a web browser is possible, and it is actually pretty cool.
 
-[Explore the demo on Github](https://jinglescode.github.io/demos/tfjs-timeseries-stocks), this experiment is 100% educational and by no means a trading prediction tool.
+[Explore the demo on Github](https://jinglescode.github.io/time-series-forecasting-tensorflowjs), this experiment is 100% educational and by no means a trading prediction tool.
