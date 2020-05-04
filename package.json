@@ -4,7 +4,8 @@
   "description": "Pull stock prices from online API and perform predictions using Recurrent Neural Network & Long Short Term Memory (LSTM) with TensorFlow.js framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push": "git push https://github.com/jinglescode/time-series-forecasting-tensorflowjs.git master"
   },
   "repository": {
     "type": "git",
