@@ -84,377 +84,373 @@
     <div class="card" id="div_data">
       <div class="card-content">
         <span class="card-title">Get Stocks Data</span>
-          <p>
-            <!-- [purpose of this step, fun for the reader] -->
-            Before we can train our neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good starting place to fetch these data is from <a href="https://www.alphavantage.co" target="_blank">alphavantage.co</a>. This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years.
-          </p>
-          <p>
-            The API yields the following fields:
-            <li>open price</li>
-            <li>highest price of that day</li>
-            <li>lowest price of that day</li>
-            <li>closing price</li>
-            <li>volume</li>
-          </p>
-          <p>
-            To prepare training dataset for our neural network, we will be using closing stocks price; which also means that we will be aiming to predict future closing price.
-          </p>
+        <p>
+          <!-- [purpose of this step, fun for the reader] -->
+          Before we can train our neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good starting place to fetch these data is from <a href="https://www.alphavantage.co" target="_blank">alphavantage.co</a>. This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years.
+        </p>
+        <p>
+          The API yields the following fields:
+          <li>open price</li>
+          <li>highest price of that day</li>
+          <li>lowest price of that day</li>
+          <li>closing price</li>
+          <li>volume</li>
+        </p>
+        <p>
+          To prepare training dataset for our neural network, we will be using closing stocks price; which also means that we will be aiming to predict future closing price.
+        </p>
 
-          <span class="card-title">Try It</span>
+        <span class="card-title">Try It</span>
 
-          <p>
-            <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-            Use <i>demo</i> API key to fetch <i>Microsoft Corporation</i> prices or <a href="https://www.alphavantage.co/support/#api-key" target="_blank">get your own API key</a> for other stocks.
-          </p>
+        <p>
+          <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+          Use <i>demo</i> API key to fetch <i>Microsoft Corporation</i> prices or <a href="https://www.alphavantage.co/support/#api-key" target="_blank">get your own API key</a> for other stocks.
+        </p>
 
-          <div class="row" id="div_container_getdata">
-            <div class="col m4">
-              <div class="input-field col s12">
-                <label for="input_ticker">Ticker Symbol</label>
-                <input type="text" id="input_ticker" placeholder="example: MSFT" value="MSFT">
-                <small class="form-text text-muted">Demo API key only allows 'MSFT'</small>
-              </div>
-            </div>
-            <div class="col m4">
-              <div class="input-field col s12">
-                <label for="input_apikey">Alpha Vantage API Key</label>
-                <input type="text" id="input_apikey" placeholder="Input your API key or use 'demo'" value="demo">
-                <small class="form-text text-muted">You can claim your API key from <a href="https://www.alphavantage.co/support/#api-key" target="_blank">alphavantage.co</a></small>
-              </div>
-            </div>
-            <div class="col m4">
-              <div class="input-field col s12">
-                <select onchange="onClickChangeDataFreq(this)">
-                  <option value="Weekly" onchange="onClickChangeDataFreq('Weekly')" selected>Weekly</option>
-                  <option value="Daily" onchange="onClickChangeDataFreq('Daily')">Daily</option>
-                </select>
-                <label>Data Temporal Resolutions</label>
-              </div>
-            </div>
-            <div class="col s12">
-              <button class="waves-effect waves-light btn" id="btn_fetch_data" onclick="onClickFetchData()">Fetch Data</button>
-              <div class="preloader-wrapper small active" id="load_fetch_data" style="display:none">
-                <div class="spinner-layer spinner-green-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                  </div>
-                </div>
-              </div>
-
+        <div class="row" id="div_container_getdata">
+          <div class="col m4">
+            <div class="input-field col s12">
+              <label for="input_ticker">Ticker Symbol</label>
+              <input type="text" id="input_ticker" placeholder="example: MSFT" value="MSFT">
+              <small class="form-text text-muted">Demo API key only allows 'MSFT'</small>
             </div>
           </div>
-
-          <div class="row" id="div_container_linegraph" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title">Loaded Stocks Data</span>
-                  <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Card Title<</span>
-                  <div>
-                    <div id="div_linegraph_data" style="width:100%; height:350px;"></div>
-                  </div>
+          <div class="col m4">
+            <div class="input-field col s12">
+              <label for="input_apikey">Alpha Vantage API Key</label>
+              <input type="text" id="input_apikey" placeholder="Input your API key or use 'demo'" value="demo">
+              <small class="form-text text-muted">You can claim your API key from <a href="https://www.alphavantage.co/support/#api-key" target="_blank">alphavantage.co</a></small>
+            </div>
+          </div>
+          <div class="col m4">
+            <div class="input-field col s12">
+              <select onchange="onClickChangeDataFreq(this)">
+                <option value="Weekly" onchange="onClickChangeDataFreq('Weekly')" selected>Weekly</option>
+                <option value="Daily" onchange="onClickChangeDataFreq('Daily')">Daily</option>
+              </select>
+              <label>Data Temporal Resolutions</label>
+            </div>
+          </div>
+          <div class="col s12">
+            <button class="waves-effect waves-light btn" id="btn_fetch_data" onclick="onClickFetchData()">Fetch Data</button>
+            <div class="preloader-wrapper small active" id="load_fetch_data" style="display:none">
+              <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-      <!-- E Get Stocks Data -->
 
-      <div class="card" id="div_sma">
-        <div class="card-content">
-          <span class="card-title">Simple Moving Average</span>
-          <p>
-            <!-- [purpose of this step, fun for the reader] -->
-            For this experiment, we are using <a href="https://en.wikipedia.org/wiki/Supervised_learning" target="_blank">supervised learning</a>, which means feeding data to the neural network and it learns by mapping input data to the output label. One way to prepare the training dataset is to extract Simple Moving Average from that time series data.
-          </p>
-          <p>
-            <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> is a method to identify trends direction for a certain period of time, by looking at the average of all the values within that time window. The number of prices in a time window is selected experimentally. For example, let's assume the closing prices for past 5 days were 13, 15, 14, 16, 17, the SMA would be (13+15+14+16+17)/5 = 15. So the <i>input</i> for our training dataset is the set of prices within a single time window, and <i>label</i> is the computed moving average of those prices.
-          </p>
-
-          <span class="card-title">Try It</span>
-
-          <div class="row" id="div_container_getsmafirst">
-            <div class="col s12">
-              <p>But first, <a href="#div_data">fetch stocks data</a> from the previous step.</p>
+        <div class="row" id="div_container_linegraph" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title">Loaded Stocks Data</span>
+                <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Card Title<</span>
+                <div>
+                  <div id="div_linegraph_data" style="width:100%; height:350px;"></div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="row" id="div_container_getsma" style="display:none">
+      </div>
+    </div>
+    <!-- E Get Stocks Data -->
+
+    <div class="card" id="div_sma">
+      <div class="card-content">
+        <span class="card-title">Simple Moving Average</span>
+        <p>
+          <!-- [purpose of this step, fun for the reader] -->
+          For this experiment, we are using <a href="https://en.wikipedia.org/wiki/Supervised_learning" target="_blank">supervised learning</a>, which means feeding data to the neural network and it learns by mapping input data to the output label. One way to prepare the training dataset is to extract Simple Moving Average from that time series data.
+        </p>
+        <p>
+          <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> is a method to identify trends direction for a certain period of time, by looking at the average of all the values within that time window. The number of prices in a time window is selected experimentally. For example, let's assume the closing prices for past 5 days were 13, 15, 14, 16, 17, the SMA would be (13+15+14+16+17)/5 = 15. So the <i>input</i> for our training dataset is the set of prices within a single time window, and <i>label</i> is the computed moving average of those prices.
+        </p>
+
+        <span class="card-title">Try It</span>
+
+        <div class="row" id="div_container_getsmafirst">
+          <div class="col s12">
+            <p>But first, <a href="#div_data">fetch stocks data</a> from the previous step.</p>
+          </div>
+        </div>
+
+        <div class="row" id="div_container_getsma" style="display:none">
+          <div class="col s12">
+            <p>
+              <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+              Let's generate the training dataset, hit on the <i>Compute SMA and Draw Chart</i> button to generate the training data for the neural network.
+            </p>
+          </div>
+          <div class="col s6">
+            <div class="input-field col s12">
+              <label for="input_windowsize">Window Size</label>
+              <input type="number" id="input_windowsize" placeholder="a number" value="50">
+              <small class="form-text text-muted">This is the "time window" for SMA</small>
+            </div>
+          </div>
+          <div class="col s12">
+            <button class="waves-effect waves-light btn" id="btn_draw_sma" onclick="onClickDisplaySMA()">Compute SMA and Draw Chart</button>
+            <div class="spinner-border" id="load_draw_sma" style="display:none"></div>
+          </div>
+        </div>
+
+        <div class="row" id="div_container_sma" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4" id="div_linegraph_sma_title"></span>
+                  <div id="div_linegraph_sma" style="width:100%; height:350px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="div_container_trainingdata" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Data (top 25 rows)</span>
+                <div style="overflow-x: scroll;" id="div_trainingdata">
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- E Simple Moving Average -->
+
+    <div class="card" id="div_train">
+      <div class="card-content">
+        <span class="card-title">Train Neural Network</span>
+        <p>
+          <!-- [purpose of this step, fun for the reader] -->
+          Now that you have the training data, it is time to create a model for time series prediction, to achieve this we will use <a href="https://js.tensorflow.org/" target="_blank">TensorFlow.js</a> framework.
+        </p>
+        <p>
+          <a href="https://js.tensorflow.org/api/latest/#sequential" target="_blank">Sequential model</a> is selected which simply connects each layer and pass the data from input to the output during the training process. In order for the model to learn time series data which are sequential, <a href="https://js.tensorflow.org/api/latest/#layers.rnn" target="_blank">recurrent neural network (RNN) layer</a> layer is created and a number of <a href="https://js.tensorflow.org/api/latest/#layers.lstmCell" target="_blank">LSTM cells</a> are added to the RNN.
+        </p>
+        <p>
+          The model will be trained using <a href="https://js.tensorflow.org/api/latest/#train.adam" target="_blank">Adam</a> (<a href="https://arxiv.org/abs/1412.6980" target="_blank">read more</a>), a popular optimisation algorithm for machine learning. <a href="https://js.tensorflow.org/api/latest/#losses.meanSquaredError" target="_blank">Root-means-squared error</a> which determine the difference between predicted values and the actual values, so model is able to learn by minimising the error during the training process.
+        </p>
+        <p>
+          <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+          These are the hyperparameters (parameters used in the training process) available for tweaking:
+          <li>Training Dataset Size (%): the amount of data used for training, and remaining data will be used for prediction</li>
+          <li>Epochs: number of times the dataset is used to train the model (<a href="https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/" target="_blank">learn more</a>)</li>
+          <li>Learning Rate: amount of change in the weights during training in each step (<a href="https://machinelearningmastery.com/learning-rate-for-deep-learning-neural-networks/" target="_blank">learn more</a>)</li>
+          <li>Hidden LSTM Layers: to increase the model complexity to learn in higher dimensional space (<a href="https://machinelearningmastery.com/how-to-configure-the-number-of-layers-and-nodes-in-a-neural-network/" target="_blank">learn more</a>)</li>
+        </p>
+
+        <span class="card-title">Try It</span>
+        <p>
+          <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+          You may tweak the hyperparameters and then hit the <i>Begin Training Model</i> button to train the model.
+        </p>
+        <div class="row" id="div_container_trainfirst">
+          <div class="col s12">
+            <p>Need training data? Explore the previous section to <a href="#div_sma">prepare training data</a>.</p>
+          </div>
+        </div>
+
+        <div id="div_container_train" style="display:none">
+          <div class="row">
             <div class="col s12">
               <p>
                 <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-                Let's generate the training dataset, hit on the <i>Compute SMA and Draw Chart</i> button to generate the training data for the neural network.
+                You may tweak the hyperparameters and then hit the <i>Begin Training Model</i> button to train the model.
               </p>
             </div>
             <div class="col s6">
               <div class="input-field col s12">
-                <label for="input_windowsize">Window Size</label>
-                <input type="number" id="input_windowsize" placeholder="a number" value="50">
-                <small class="form-text text-muted">This is the "time window" for SMA</small>
+                <label for="input_trainingsize">Training Dataset Size (%)</label>
+                <input type="number" id="input_trainingsize" placeholder="a number between (1-99)" value="70">
               </div>
-            </div>
-            <div class="col s12">
-              <button class="waves-effect waves-light btn" id="btn_draw_sma" onclick="onClickDisplaySMA()">Compute SMA and Draw Chart</button>
-              <div class="spinner-border" id="load_draw_sma" style="display:none"></div>
-            </div>
-          </div>
-
-          <div class="row" id="div_container_sma" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title grey-text text-darken-4" id="div_linegraph_sma_title"></span>
-                    <div id="div_linegraph_sma" style="width:100%; height:350px;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row" id="div_container_trainingdata" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Data (top 25 rows)</span>
-                  <div style="overflow-x: scroll;" id="div_trainingdata">
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- E Simple Moving Average -->
-
-      <div class="card" id="div_train">
-        <div class="card-content">
-          <span class="card-title">Train Neural Network</span>
-          <p>
-            <!-- [purpose of this step, fun for the reader] -->
-            Now that you have the training data, it is time to create a model for time series prediction, to achieve this we will use <a href="https://js.tensorflow.org/" target="_blank">TensorFlow.js</a> framework.
-          </p>
-          <p>
-            <a href="https://js.tensorflow.org/api/latest/#sequential" target="_blank">Sequential model</a> is selected which simply connects each layer and pass the data from input to the output during the training process. In order for the model to learn time series data which are sequential, <a href="https://js.tensorflow.org/api/latest/#layers.rnn" target="_blank">recurrent neural network (RNN) layer</a> layer is created and a number of <a href="https://js.tensorflow.org/api/latest/#layers.lstmCell" target="_blank">LSTM cells</a> are added to the RNN.
-          </p>
-          <p>
-            The model will be trained using <a href="https://js.tensorflow.org/api/latest/#train.adam" target="_blank">Adam</a> (<a href="https://arxiv.org/abs/1412.6980" target="_blank">read more</a>), a popular optimisation algorithm for machine learning. <a href="https://js.tensorflow.org/api/latest/#losses.meanSquaredError" target="_blank">Root-means-squared error</a> which determine the difference between predicted values and the actual values, so model is able to learn by minimising the error during the training process.
-          </p>
-          <p>
-            <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-            These are the hyperparameters (parameters used in the training process) available for tweaking:
-            <li>Training Dataset Size (%): the amount of data used for training, and remaining data will be used for prediction</li>
-            <li>Epochs: number of times the dataset is used to train the model (<a href="https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/" target="_blank">learn more</a>)</li>
-            <li>Learning Rate: amount of change in the weights during training in each step (<a href="https://machinelearningmastery.com/learning-rate-for-deep-learning-neural-networks/" target="_blank">learn more</a>)</li>
-            <li>Hidden LSTM Layers: to increase the model complexity to learn in higher dimensional space (<a href="https://machinelearningmastery.com/how-to-configure-the-number-of-layers-and-nodes-in-a-neural-network/" target="_blank">learn more</a>)</li>
-          </p>
-
-          <span class="card-title">Try It</span>
-          <p>
-            <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-            You may tweak the hyperparameters and then hit the <i>Begin Training Model</i> button to train the model.
-          </p>
-          <div class="row" id="div_container_trainfirst">
-            <div class="col s12">
-              <p>Need training data? Explore the previous section to <a href="#div_sma">prepare training data</a>.</p>
-            </div>
-          </div>
-
-          <div id="div_container_train" style="display:none">
-            <div class="row">
-              <div class="col s12">
-                <p>
-                  <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-                  You may tweak the hyperparameters and then hit the <i>Begin Training Model</i> button to train the model.
-                </p>
-              </div>
-              <div class="col s6">
-                <div class="input-field col s12">
-                  <label for="input_trainingsize">Training Dataset Size (%)</label>
-                  <input type="number" id="input_trainingsize" placeholder="a number between (1-99)" value="70">
-                </div>
-              </div>
-              <div class="col s6">
-                <div class="input-field col s12">
-                  <label for="input_epochs">Epochs</label>
-                  <input type="number" id="input_epochs" placeholder="a number" value="50">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s6">
-                <div class="input-field col s12">
-                  <label for="input_learningrate">Learning Rate</label>
-                  <input type="number" id="input_learningrate" placeholder="a decimal" value="0.01">
-                  <small class="form-text text-muted">Typically range between 0.01 and 0.1</small>
-                </div>
-              </div>
-              <div class="col s6">
-                <div class="input-field col s12">
-                  <label for="input_hiddenlayers">Hidden LSTM Layers</label>
-                  <input type="number" id="input_hiddenlayers" placeholder="a number'" value="4">
-                  <small class="form-text text-muted">Number of LSTM layers</small>
-                </div>
-              </div>
-              <div class="col s12">
-                <button class="waves-effect waves-light btn" id="btn_draw_trainmodel" onclick="onClickTrainModel()">Begin Training Model</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" id="div_container_training" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title">Training Model</span>
-                  <p>Note: this browser must be active for the training to progress</p>
-                  <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Model</span>
-                  <h6>Progress</h6>
-                  <!-- <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" id="div_training_progressbar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                  </div> -->
-                  <div class="progress">
-                    <div class="determinate" id="div_training_progressbar" style="width: 100%"></div>
-                  </div>
-                  <hr/>
-                  <h6>Loss</h6>
-                  <div id="div_linegraph_trainloss" style="width:100%; height:250px;"></div>
-                  <hr/>
-                  <h6>Logs</h6>
-                  <div id="div_traininglog" style="overflow-x: scroll; overflow-y: scroll; height: 250px;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- E Train Neural Network -->
-
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Validation</span>
-          <p>
-            <!-- [purpose of this step, fun for the reader] -->
-            Now that you have trained your model, it is time to use the model.predict function from TFJS to predicting future values. We have split the data into 2 sets, a subset of the data is training and the rest is the validation set. The training set has been used for training the model, thus will be using the validation set to validate the model. Since the model has not seen the data in the validation set before, it will be good if the model is able to predict values that are close to the exact values.
-          </p>
-          <span class="card-title">Try It</span>
-          <p>So let us use the remaining data for prediction which allow us to see how closely our predicted values are compared to the actual values.</p>
-          <p>But if the model did not predict values that map closely to its true values, check the training loss graph. Generally, this model should converge with the loss to be less than 1. You can increase the number of epochs, or tweak the other learning hyperparameters.</p>
-
-          <div class="row" id="div_container_validatefirst">
-            <div class="col s12">
-              <p>Don’t have a model to perform prediction? <a href="#div_train">Train your model</a>.</p>
-            </div>
-          </div>
-
-          <div class="row" id="div_container_validate" style="display:none">
-            <div class="col s12">
-              <p>
-                <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-                Hit the <i>Validate Model</i> button to see how this model performs. Whohoo!
-              </p>
             </div>
             <div class="col s6">
-              <button class="waves-effect waves-light btn" id="btn_validation" onclick="onClickValidate()">Validate Model</button>
-              <div class="spinner-border" id="load_validating" style="display:none"></div>
-            </div>
-          </div>
-          <div class="row" id="div_container_validating" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title grey-text text-darken-4" id="div_predict_title">Compare True values to Predicted values</span>
-                  <div id="div_validation_graph"></div>
-                </div>
+              <div class="input-field col s12">
+                <label for="input_epochs">Epochs</label>
+                <input type="number" id="input_epochs" placeholder="a number" value="50">
               </div>
             </div>
           </div>
-
-        </div>
-      </div>
-      <!-- E Validation -->
-
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Make Prediction</span>
-          <p>
-            <!-- [purpose of this step, fun for the reader] -->
-            Finally, the model has been validated and the predicted values map closely to its true values, we shall use it to predict the future. We will apply the same model.predict function and use the last {{input_windowsize}} data points as the input, because that is our window size. This means that, if our training data is increment daily, we will use the past {{input_windowsize}} days as input, to predict the next day.
-          </p>
-
-          <span class="card-title">Try It</span>
-          <div class="row" id="div_container_predictfirst">
-            <div class="col s12">
-              <p>Don’t have a model to perform prediction? <a href="#div_train">Train your model</a>.</p>
-            </div>
-          </div>
-          <div class="row" id="div_container_predict" style="display:none">
-            <div class="col s12">
-              <p>
-                <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
-                Hit the <i>Validate Model</i> button to see how this model performs. Whohoo!
-              </p>
+          <div class="row">
+            <div class="col s6">
+              <div class="input-field col s12">
+                <label for="input_learningrate">Learning Rate</label>
+                <input type="number" id="input_learningrate" placeholder="a decimal" value="0.01">
+                <small class="form-text text-muted">Typically range between 0.01 and 0.1</small>
+              </div>
             </div>
             <div class="col s6">
-              <button class="waves-effect waves-light btn" id="btn_prediction" onclick="onClickPredict()">Make Prediction</button>
-              <div class="spinner-border" id="load_predicting" style="display:none"></div>
+              <div class="input-field col s12">
+                <label for="input_hiddenlayers">Hidden LSTM Layers</label>
+                <input type="number" id="input_hiddenlayers" placeholder="a number'" value="4">
+                <small class="form-text text-muted">Number of LSTM layers</small>
+              </div>
+            </div>
+            <div class="col s12">
+              <button class="waves-effect waves-light btn" id="btn_draw_trainmodel" onclick="onClickTrainModel()">Begin Training Model</button>
             </div>
           </div>
-          <div class="row" id="div_container_predicting" style="display:none">
-            <div class="col s12">
-              <div class="card z-depth-5">
-                <div class="card-content">
-                  <span class="card-title grey-text text-darken-4" id="div_predict_title">Predicted</span>
-                  <div id="div_prediction_graph"></div>
+        </div>
+
+        <div class="row" id="div_container_training" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title">Training Model</span>
+                <p>Note: this browser must be active for the training to progress</p>
+                <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Model</span>
+                <h6>Progress</h6>
+                <!-- <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" id="div_training_progressbar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div> -->
+                <div class="progress">
+                  <div class="determinate" id="div_training_progressbar" style="width: 100%"></div>
                 </div>
+                <hr/>
+                <h6>Loss</h6>
+                <div id="div_linegraph_trainloss" style="width:100%; height:250px;"></div>
+                <hr/>
+                <h6>Logs</h6>
+                <div id="div_traininglog" style="overflow-x: scroll; overflow-y: scroll; height: 250px;"></div>
               </div>
             </div>
           </div>
-
-        </div>
-      </div>
-      <!-- E Make Prediction -->
-
-      <div class="row">
-
-        <div class="col s4">
-          <a href="https://github.com/jinglescode/time-series-forecasting-tensorflowjs" style="color:#000;">
-            <center>
-              <i class="fab fa-github" style="font-size: 100px;"></i><br/>
-              <span style="font-size:40px;">GitHub Repository</span><br/>
-              <p>Get the completed code</p><br/>
-            </center>
-          </a>
-        </div>
-        <div class="col s4">
-          <a href="https://jinglescode.github.io/playground/" style="color:#000;">
-            <center>
-              <i class="fas fa-laptop-code" style="font-size: 100px;"></i><br/>
-              <span style="font-size:40px;">Playground</span><br/>
-              <p>Check out other projects</p><br/>
-            </center>
-          </a>
-        </div>
-        <div class="col s4">
-          <a href="https://www.linkedin.com/in/jingles/" style="color:#000;">
-            <center>
-              <i class="fab fa-linkedin-in" style="font-size: 100px;"></i><br/>
-              <span style="font-size:40px;">Connect</span><br/>
-              <p>Connect with me on LinkedIn</p><br/>
-            </center>
-          </a>
         </div>
 
       </div>
+    </div>
+    <!-- E Train Neural Network -->
 
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Validation</span>
+        <p>
+          <!-- [purpose of this step, fun for the reader] -->
+          Now that you have trained your model, it is time to use the model.predict function from TFJS to predicting future values. We have split the data into 2 sets, a subset of the data is training and the rest is the validation set. The training set has been used for training the model, thus will be using the validation set to validate the model. Since the model has not seen the data in the validation set before, it will be good if the model is able to predict values that are close to the exact values.
+        </p>
+        <span class="card-title">Try It</span>
+        <p>So let us use the remaining data for prediction which allow us to see how closely our predicted values are compared to the actual values.</p>
+        <p>But if the model did not predict values that map closely to its true values, check the training loss graph. Generally, this model should converge with the loss to be less than 1. You can increase the number of epochs, or tweak the other learning hyperparameters.</p>
+
+        <div class="row" id="div_container_validatefirst">
+          <div class="col s12">
+            <p>Don’t have a model to perform prediction? <a href="#div_train">Train your model</a>.</p>
+          </div>
+        </div>
+
+        <div class="row" id="div_container_validate" style="display:none">
+          <div class="col s12">
+            <p>
+              <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+              Hit the <i>Validate Model</i> button to see how this model performs. Whohoo!
+            </p>
+          </div>
+          <div class="col s6">
+            <button class="waves-effect waves-light btn" id="btn_validation" onclick="onClickValidate()">Validate Model</button>
+            <div class="spinner-border" id="load_validating" style="display:none"></div>
+          </div>
+        </div>
+        <div class="row" id="div_container_validating" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4" id="div_predict_title">Compare True values to Predicted values</span>
+                <div id="div_validation_graph"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- E Validation -->
+
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Make Prediction</span>
+        <p>
+          <!-- [purpose of this step, fun for the reader] -->
+          Finally, the model has been validated and the predicted values map closely to its true values, we shall use it to predict the future. We will apply the same model.predict function and use the last {{input_windowsize}} data points as the input, because that is our window size. This means that, if our training data is increment daily, we will use the past {{input_windowsize}} days as input, to predict the next day.
+        </p>
+
+        <span class="card-title">Try It</span>
+        <div class="row" id="div_container_predictfirst">
+          <div class="col s12">
+            <p>Don’t have a model to perform prediction? <a href="#div_train">Train your model</a>.</p>
+          </div>
+        </div>
+        <div class="row" id="div_container_predict" style="display:none">
+          <div class="col s12">
+            <p>
+              <!-- [how to use, what you want your reader to do after you end, as simple and obvious] -->
+              Hit the <i>Validate Model</i> button to see how this model performs. Whohoo!
+            </p>
+          </div>
+          <div class="col s6">
+            <button class="waves-effect waves-light btn" id="btn_prediction" onclick="onClickPredict()">Make Prediction</button>
+            <div class="spinner-border" id="load_predicting" style="display:none"></div>
+          </div>
+        </div>
+        <div class="row" id="div_container_predicting" style="display:none">
+          <div class="col s12">
+            <div class="card z-depth-2">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4" id="div_predict_title">Predicted</span>
+                <div id="div_prediction_graph"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- E Make Prediction -->
+
+    <div class="row">
+      <div class="col s12 m4">
+        <a href="https://github.com/jinglescode/time-series-forecasting-tensorflowjs" style="color:#000;">
+          <center>
+            <i class="fab fa-github" style="font-size: 100px;"></i><br/>
+            <span style="font-size:40px;">GitHub Repository</span><br/>
+            <p>Get the completed code</p><br/>
+          </center>
+        </a>
+      </div>
+      <div class="col s12 m4">
+        <a href="https://jinglescode.github.io/playground/" style="color:#000;">
+          <center>
+            <i class="fas fa-laptop-code" style="font-size: 100px;"></i><br/>
+            <span style="font-size:40px;">Playground</span><br/>
+            <p>Check out other projects</p><br/>
+          </center>
+        </a>
+      </div>
+      <div class="col s12 m4">
+        <a href="https://www.linkedin.com/in/jingles/" style="color:#000;">
+          <center>
+            <i class="fab fa-linkedin-in" style="font-size: 100px;"></i><br/>
+            <span style="font-size:40px;">Connect</span><br/>
+            <p>Connect with me on LinkedIn</p><br/>
+          </center>
+        </a>
+      </div>
     </div>
 
-  </div>
+  </div> <!-- E container -->
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://jinglescode.github.io/assets/js/materialize.min.js" type="text/javascript"></script>
