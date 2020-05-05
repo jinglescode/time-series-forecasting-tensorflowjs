@@ -195,7 +195,7 @@
           <div class="col s6">
             <div class="input-field col s12">
               <label for="input_windowsize">Window Size</label>
-              <input type="number" id="input_windowsize" placeholder="a number" value="50">
+              <input type="number" id="input_windowsize" placeholder="a number" value="20">
               <small class="form-text text-muted">This is the "time window" for SMA</small>
             </div>
           </div>
@@ -219,7 +219,7 @@
           <div class="col s12">
             <div class="card z-depth-2">
               <div class="card-content">
-                <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Data (top 25 rows)</span>
+                <span class="card-title grey-text text-darken-4">Training Data (top 25 rows)</span>
                 <div style="overflow-x: scroll;" id="div_trainingdata">
               </div>
             </div>
@@ -275,13 +275,13 @@
             <div class="col s6">
               <div class="input-field col s12">
                 <label for="input_trainingsize">Training Dataset Size (%)</label>
-                <input type="number" id="input_trainingsize" placeholder="a number between (1-99)" value="70">
+                <input type="number" id="input_trainingsize" placeholder="a number between (1-99)" value="98">
               </div>
             </div>
             <div class="col s6">
               <div class="input-field col s12">
                 <label for="input_epochs">Epochs</label>
-                <input type="number" id="input_epochs" placeholder="a number" value="50">
+                <input type="number" id="input_epochs" placeholder="a number" value="25">
               </div>
             </div>
           </div>
@@ -310,9 +310,8 @@
           <div class="col s12">
             <div class="card z-depth-2">
               <div class="card-content">
-                <span class="card-title">Training Model</span>
-                <p>Note: this browser must be active for the training to progress</p>
-                <span class="card-title grey-text text-darken-4" id="div_linegraph_data_title">Training Model</span>
+                <span class="card-title grey-text text-darken-4">Training Model</span>
+                <p>We are expecting a loss of less than 0.1. Note: this browser must be active for the training to progress.</p>
                 <h6>Progress</h6>
                 <!-- <div class="progress">
                   <div class="progress-bar progress-bar-striped progress-bar-animated" id="div_training_progressbar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>

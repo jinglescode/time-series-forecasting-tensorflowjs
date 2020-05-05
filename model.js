@@ -1,4 +1,4 @@
-async function trainModel(inputs, outputs, trainingsize, window_size, n_epochs, learning_rate, n_layers, callback){
+async function trainModel(X, Y, window_size, n_epochs, learning_rate, n_layers, callback){
 
   const input_layer_shape  = window_size;
   const input_layer_neurons = 100;
@@ -15,9 +15,6 @@ async function trainModel(inputs, outputs, trainingsize, window_size, n_epochs, 
   const output_layer_neurons = 1;
 
   const model = tf.sequential();
-
-  let X = inputs.slice(0, Math.floor(trainingsize / 100 * inputs.length));
-  let Y = outputs.slice(0, Math.floor(trainingsize / 100 * outputs.length));
 
   const xs = tf.tensor2d(X, [X.length, X[0].length]).div(tf.scalar(10));
   const ys = tf.tensor2d(Y, [Y.length, 1]).reshape([Y.length, 1]).div(tf.scalar(10));
@@ -54,9 +51,8 @@ async function trainModel(inputs, outputs, trainingsize, window_size, n_epochs, 
   return { model: model, stats: hist };
 }
 
-function makePredictions(inputs, size, model)
+function makePredictions(X, model)
 {
-    let X = inputs.slice(Math.floor(size / 100 * inputs.length), inputs.length);
     const predictedResults = model.predict(tf.tensor2d(X, [X.length, X[0].length]).div(tf.scalar(10))).mul(10);
     return Array.from(predictedResults.dataSync());
 }
