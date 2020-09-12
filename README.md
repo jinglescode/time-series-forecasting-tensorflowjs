@@ -20,7 +20,7 @@ There are 4 parts to this project walkthrough:
 
 # Get Stocks Data
 
-Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data are from [alphavantage.co](https://www.alphavantage.co/). This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years.
+Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data is the [Alpha Vantage Stock API](https://www.alphavantage.co/). This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years. You may also refer to [this article](https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631) that explains adjusted stock prices, which is an important technical concept for working with historical market data. 
 
 The API yields the following fields:
 - open price
@@ -170,6 +170,16 @@ Other algorithms can be applied and uses the [Root Mean Square Error](https://ww
 Finally, the model has been validated and the predicted values map closely to its true values, we shall use it to predict the future. We will apply the same model.predict function and use the last 50 data points as the input, because our window size is 50. Since our training data is increment daily, we will use the past 50 days as input, to predict the 51st day.
 
 ![Predict the 51st day](https://jinglescode.github.io/assets/img/posts/time-series-06.jpg)
+
+# Why isn't my Model Performing?
+
+**The model has never seen similar data in the past**. In March 2020, where the market dipped and recovered within a month or two, this has never happened in history. The model is likely to fail to predict drastic changes in stock prices during those periods.
+
+**We can add more features**. In a general sense, more features tend to make the model perform better. We can include trading indicators such as Moving average convergence divergence (MACD), Relative strength index (RSI), or Bollinger bands.
+
+**Add even more features**. Another amazing API that [Alpha Vantage API](https://www.alphavantage.co/documentation/#fundamentals) provides is Fundamental Data. This means that you can also include annual and quarterly income statements and cash flows for the company of interest. Who knows, those features might be useful.
+
+There could have many other reasons why the model fails to learn and predict. This is the challenge of machine learning; it is both an art and science to build good performing models.
 
 # Conclusion
 

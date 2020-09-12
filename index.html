@@ -86,7 +86,7 @@
         <span class="card-title">Get Stocks Data</span>
         <p>
           <!-- [purpose of this step, fun for the reader] -->
-          Before we can train our neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good starting place to fetch these data is from <a href="https://www.alphavantage.co" target="_blank">alphavantage.co</a>. This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years.
+          Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data is the <a href="https://www.alphavantage.co" target="_blank">Alpha Vantage Stock API</a>. This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years. You may also refer to <a href="https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631" target="_blank">this article</a>. that explains adjusted stock prices, which is an important technical concept for working with historical market data. 
         </p>
         <p>
           The API yields the following fields:
@@ -418,6 +418,28 @@
       </div>
     </div>
     <!-- E Make Prediction -->
+
+
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Conclusion</span>
+        <p>
+          Why isn’t my Model Performing?<br/>
+          The model has never seen similar data in the past. In March 2020, where the market dipped and recovered within a month or two, this has never happened in history. The model is likely to fail to predict drastic changes in stock prices during those periods.<br/>
+          We can add more features. In a general sense, more features tend to make the model perform better. We can include trading indicators such as Moving average convergence divergence (MACD), Relative strength index (RSI), or Bollinger bands.<br/>
+          Add even more features. One amazing thing that <a href="https://www.alphavantage.co/documentation/#fundamentals" target="_blank">Alpha Vantage API</a> provides is Fundamental Data. This means that you can also include annual and quarterly income statements and cash flows for the company of interest. Who knows, those features might be useful.<br/>
+          There could have many other reasons why the model fails to learn and predict. This is the challenge of machine learning; it is both an art and science to build good performing models.
+        </p>
+
+        <p>
+          There are many ways to do time series prediction other than using a simple moving average. Possible future work is to implement this with more data from various sources.<br/>
+          With TensorFlow.js, machine learning on a web browser is possible, and it is actually pretty cool.<br/>
+          Explore the demo on Github, this experiment is 100% educational and by no means a trading prediction tool.
+        </p>
+      </div>
+    </div>
+    <!-- E Conclusion -->
+
 
     <div class="row">
       <div class="col s12 m4">
