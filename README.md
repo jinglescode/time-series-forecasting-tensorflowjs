@@ -1,5 +1,5 @@
 # Time Series Forecasting with TensorFlow.js
-> Pull stock prices from online API and perform predictions using Recurrent Neural Network & Long Short Term Memory (LSTM) with TensorFlow.js framework
+> Pull stock prices from online API and perform predictions using Long Short Term Memory (LSTM) with TensorFlow.js framework
 
 ![cover](https://jinglescode.github.io/assets/img/posts/time-series-00.jpg)
 
@@ -11,6 +11,24 @@ Disclaimer: As stock markets fluctuation are dynamic and unpredictable owing to 
 
 ---
 
+# Table of contents
+
+**[Project Walkthrough](#project-walkthrough)**
+- [Get Stocks Data](#get-stocks-data)
+- [Simple Moving Average](#simple-moving-average)
+- [Training Data](#training-data)
+- [Train Neural Network](#train-neural-network)
+- [Validation](#validation)
+- [Prediction](#prediction)
+- [Why isn't my Model Performing?](#why-isnt-my-model-performing)
+- [Conclusion](#conclusion)
+
+**[Contribute](#contribute)**
+
+**[License](#license)**
+
+---
+
 # Project Walkthrough
 There are 4 parts to this project walkthrough:
 1. Get stocks data from online API
@@ -18,7 +36,7 @@ There are 4 parts to this project walkthrough:
 3. Train LSTM neural network
 4. Predict and compare predicted values to the actual values
 
-# Get Stocks Data
+## Get Stocks Data
 
 Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data is the [Alpha Vantage Stock API](https://www.alphavantage.co/). This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years. You may also refer to [this article](https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631) that explains adjusted stock prices, which is an important technical concept for working with historical market data. 
 
@@ -33,7 +51,7 @@ To prepare training dataset for our neural network, we will be using closing sto
 
 ![20 years of Microsoft Corporation weekly closing prices data from alphavantage.co](https://jinglescode.github.io/assets/img/posts/time-series-01.jpg)
 
-# Simple Moving Average
+## Simple Moving Average
 
 For this experiment, we are using [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), which means feeding data to the neural network and it learns by mapping input data to the output label. One way to prepare the training dataset is to extract the moving average from that time-series data.
 
@@ -63,13 +81,13 @@ And this is what we get, weekly stock closing price in blue, and SMA in orange. 
 
 ![Simple Moving Average of Microsoft Corporation closing prices data](https://jinglescode.github.io/assets/img/posts/time-series-02.jpg)
 
-# Training Data
+## Training Data
 
 We can prepare the training data with weekly stock prices and the computed SMA. Given the window size is 50, this means that we will use the closing price of every 50 consecutive weeks as our training features (X), and the SMA of those 50 weeks as our training label (Y). Which [looks like that](https://gist.github.com/jinglescode/60f8f9357b3960a1b3017d7483f8194c).
 
 Next, we split our data into 2 sets, training and validation set. If 70% of the data is used for training, then 30% for validation. The API returns us approximate 1000 weeks of data, so 700 for training, and 300 for validation.
 
-# Train Neural Network
+## Train Neural Network
 
 Now that the training data is ready, it is time to create a model for time series prediction, to achieve this we will use [TensorFlow.js](https://www.tensorflow.org/js) framework. TensorFlow.js is a library for developing and training machine learning models in JavaScript, and we can deploy these machine learning capabilities in a web browser.
 
@@ -151,7 +169,7 @@ Click the Begin Training Model button…
 
 The model seems to converge at around 15 epoch.
 
-# Validation
+## Validation
 
 Now that the model is trained, it is time to use it for predicting future values, for our case, it is the moving average. We will use the model.predict function from TFJS.
 
@@ -165,13 +183,13 @@ Looks like the model predicted (green line) does a good job plotting closely to 
 
 Other algorithms can be applied and uses the [Root Mean Square Error](https://www.statisticshowto.datasciencecentral.com/rmse/) to compare 2 or more models performance.
 
-# Prediction
+## Prediction
 
 Finally, the model has been validated and the predicted values map closely to its true values, we shall use it to predict the future. We will apply the same model.predict function and use the last 50 data points as the input, because our window size is 50. Since our training data is increment daily, we will use the past 50 days as input, to predict the 51st day.
 
 ![Predict the 51st day](https://jinglescode.github.io/assets/img/posts/time-series-06.jpg)
 
-# Why isn't my Model Performing?
+## Why isn't my Model Performing?
 
 **The model has never seen similar data in the past**. In March 2020, where the market dipped and recovered within a month or two, this has never happened in history. The model is likely to fail to predict drastic changes in stock prices during those periods.
 
@@ -181,10 +199,22 @@ Finally, the model has been validated and the predicted values map closely to it
 
 There could have many other reasons why the model fails to learn and predict. This is the challenge of machine learning; it is both an art and science to build good performing models.
 
-# Conclusion
+## Conclusion
 
 There are many ways to do time series prediction other than using a simple moving average. Possible future work is to implement this with more data from various sources.
 
 With TensorFlow.js, machine learning on a web browser is possible, and it is actually pretty cool.
 
 [Explore the demo on Github](https://jinglescode.github.io/time-series-forecasting-tensorflowjs), this experiment is 100% educational and by no means a trading prediction tool.
+
+---
+
+# Contribute
+
+This project is by no means the final version. As discussed above on [why model isn't performing](#why-isnt-my-model-performing), there are many ways to improve the model performance. You can contribute! All contributions are welcome whether to improve to build a robust model or fix up the user interface.
+
+# License
+
+A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+[Apache License 2.0](https://github.com/jinglescode/time-series-forecasting-tensorflowjs/blob/master/LICENSE)
