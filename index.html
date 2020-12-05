@@ -89,15 +89,19 @@
           Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data is the <a href="https://www.alphavantage.co" target="_blank">Alpha Vantage Stock API</a>. This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years. You may also refer to <a href="https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631" target="_blank">this article</a>. that explains adjusted stock prices, which is an important technical concept for working with historical market data. 
         </p>
         <p>
+          You can either pick <a href="https://www.alphavantage.co/documentation/#dailyadj" target="_blank">daily adjusted</a> or <a href="https://www.alphavantage.co/documentation/#weeklyadj" target="_blank">weekly adjusted</a>, open/high/low/close/volume values, daily adjusted close values, and historical split/dividend events of the global equity specified, covering 20+ years of historical data. As suggested by <a href="https://github.com/jinglescode/time-series-forecasting-tensorflowjs/issues/4" target="_blank">desduvauchelle</a>, using adjusted close price is more robust to stock split compared to using closing price.
+        </p>
+        <p>
           The API yields the following fields:
           <li>open price</li>
           <li>highest price of that day</li>
           <li>lowest price of that day</li>
           <li>closing price</li>
+          <li>adjusted close price (this is used in this project)</li>
           <li>volume</li>
         </p>
         <p>
-          To prepare training dataset for our neural network, we will be using closing stocks price; which also means that we will be aiming to predict future closing price.
+          To prepare training dataset for our neural network, we will be using adjusted close stocks price; which also means that we will be aiming to predict future closing price.
         </p>
 
         <span class="card-title">Try It</span>

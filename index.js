@@ -27,9 +27,9 @@ function onClickFetchData(){
 
   let requestUrl = "";
   if(data_temporal_resolutions == 'Daily'){
-    requestUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+ticker+"&outputsize=full&apikey="+apikey;
+    requestUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+ticker+"&outputsize=full&apikey="+apikey;
   }else{
-    requestUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="+ticker+"&apikey="+apikey;
+    requestUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol="+ticker+"&apikey="+apikey;
   }
 
   $.getJSON(requestUrl
@@ -43,7 +43,7 @@ function onClickFetchData(){
       if(data_temporal_resolutions == 'Daily'){
         daily = data['Time Series (Daily)'];
       }else{
-        daily = data['Weekly Time Series'];
+        daily = data['Weekly Adjusted Time Series'];
       }
 
       if(daily){
@@ -55,7 +55,7 @@ function onClickFetchData(){
 
         let index = 0;
         for(let date in daily){
-          data_raw.push({ timestamp: date, price: parseFloat(daily[date]['4. close']) });
+          data_raw.push({ timestamp: date, price: parseFloat(daily[date]['5. adjusted close']) });
           index++;
         }
 

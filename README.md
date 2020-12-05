@@ -40,14 +40,17 @@ There are 4 parts to this project walkthrough:
 
 Before we can train the neural network and make any predictions, we will first require data. The type of data we are looking for is time series: a sequence of numbers in chronological order. A good place to fetch these data is the [Alpha Vantage Stock API](https://www.alphavantage.co/). This API allows us to retrieve chronological data on specific company stocks prices from the last 20 years. You may also refer to [this article](https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631) that explains adjusted stock prices, which is an important technical concept for working with historical market data. 
 
+You can either pick [daily adjusted](https://www.alphavantage.co/documentation/#dailyadj) or [weekly adjusted](https://www.alphavantage.co/documentation/#weeklyadj), open/high/low/close/volume values, adjusted close values, and historical split/dividend events of the global equity specified, covering 20+ years of historical data. As suggested by [desduvauchelle](https://github.com/jinglescode/time-series-forecasting-tensorflowjs/issues/4), using adjusted close price is more robust to stock split compared to using closing price.
+
 The API yields the following fields:
 - open price
 - the highest price of that day
 - the lowest price of that day
-- closing price (this is used in this project)
+- closing price 
+- adjusted close price (this is used in this project)
 - volume
 
-To prepare training dataset for our neural network, we will be using closing stocks price. This also means that we will be aiming to predict the future closing price. Below graph shows 20 years of Microsoft Corporation weekly closing prices.
+To prepare training dataset for our neural network, we will be using adjusted close stocks price. This also means that we will be aiming to predict the future closing price. Below graph shows 20 years of Microsoft Corporation weekly closing prices.
 
 ![20 years of Microsoft Corporation weekly closing prices data from alphavantage.co](https://jinglescode.github.io/assets/img/posts/time-series-01.jpg)
 
