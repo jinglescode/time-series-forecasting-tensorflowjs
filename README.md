@@ -1,9 +1,10 @@
 # Time Series Forecasting with TensorFlow.js
+
 > Pull stock prices from online API and perform predictions using Long Short Term Memory (LSTM) with TensorFlow.js framework
 
 ![cover](https://jinglescode.github.io/assets/img/posts/time-series-00.jpg)
 
-Machine learning is becoming increasingly popular these days and a growing number of the world’s population see it is as a magic crystal ball: predicting when and what will happen in the future. This experiment uses artificial neural networks to reveal stock market trends and demonstrates the ability of time series forecasting to predict future stock prices based on past historical data.
+Machine learning is becoming increasingly popular these days and a growing number of the world’s population see it is as a magic crystal ball: predicting when and what will happen in the future. This experiment uses artificial neural networks to reveal stock market trends and demonstrates the ability of time series forecasting to predict future stock prices based on past historical data. [See also: [Predicting Stock Prices with PyTorch](https://github.com/jinglescode/time-series-forecasting-pytorch)]
 
 Disclaimer: As stock markets fluctuation are dynamic and unpredictable owing to multiple factors, this experiment is 100% educational and by no means a trading prediction tool.
 
@@ -100,7 +101,7 @@ The model will be trained using [Adam](https://js.tensorflow.org/api/latest/#tra
 
 Here is a code snippet of the model described above, [full code on Github](https://github.com/jinglescode/demos/tree/master/src/app/components/tfjs-timeseries-stocks).
 
-```
+```javascript
 async function trainModel(inputs, outputs, trainingsize, window_size, n_epochs, learning_rate, n_layers, callback){
 
   const input_layer_shape  = window_size;
@@ -196,6 +197,8 @@ Finally, the model has been validated and the predicted values map closely to it
 
 **The model has never seen similar data in the past**. In March 2020, where the market dipped and recovered within a month or two, this has never happened in history. The model is likely to fail to predict drastic changes in stock prices during those periods.
 
+**Price data is not scaled**. LSTMs are intrinsically sensitive to the scale of the input data. Thus, it is crucial to normalize the data. Standard min-max normalization has been included in the script, but if your model isn't performing, this is one area you can dig deeper.
+
 **We can add more features**. In a general sense, more features tend to make the model perform better. We can include trading indicators such as Moving average convergence divergence (MACD), Relative strength index (RSI), or Bollinger bands.
 
 **Add even more features**. Another amazing API that [Alpha Vantage API](https://www.alphavantage.co/documentation/#fundamentals) provides is Fundamental Data. This means that you can also include annual and quarterly income statements and cash flows for the company of interest. Who knows, those features might be useful.
@@ -209,6 +212,13 @@ There are many ways to do time series prediction other than using a simple movin
 With TensorFlow.js, machine learning on a web browser is possible, and it is actually pretty cool.
 
 [Explore the demo on Github](https://jinglescode.github.io/time-series-forecasting-tensorflowjs), this experiment is 100% educational and by no means a trading prediction tool.
+
+---
+
+# Updates
+
+- **May 2021**: Fixed data the normalize function, more robust for different dataset. 
+- **Dec 2020**: Use adjusted close price instead, to remove any artificial price turbulences due to stock splits and dividend payout events
 
 ---
 
